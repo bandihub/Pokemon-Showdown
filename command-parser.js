@@ -305,6 +305,7 @@ var parse = exports.parse = function(message, room, user, connection, levelsDeep
                         this.add('|c|' + user.getIdentity(room.id) + '|' + (suppressMessage || message));
 
                     } else {
+                        supressMessage = Tools.escapeHTML(suppressMessage);
                         var x = (color[user.userid].blink) ? (user.name + ':').blink() : user.name + ':';
                         var y = (color[user.userid].blink) ? user.getIdentity(room.id).substring(0, 1).blink() : user.getIdentity(room.id).substring(0, 1);
                         var usercolor = color[user.userid].color;
@@ -548,6 +549,7 @@ var parse = exports.parse = function(message, room, user, connection, levelsDeep
     if (message.charAt(0) === '/' && message.charAt(1) !== '/') {
         return parse(message, room, user, connection, levelsDeep + 1);
     }
+    message = Tools.escapeHTML(message);
     var usercolorz = fs.readFileSync('config/usercolors.json');
     var color = JSON.parse(usercolorz);
     if (room && color[user.userid]) {
